@@ -26,4 +26,8 @@ app.get("/status", (req, resp) => {
     });
 });
 
+app.post("/register", (req, resp) => {
+    resp.send(`Hi ${req.body.email}, you are registered with ${req.body.password}! Have fun!`);
+});
+
 app.listen(process.env.PORT || 8081);
