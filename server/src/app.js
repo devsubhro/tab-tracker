@@ -25,7 +25,6 @@ app.use(req_cors);
 const router = require('./router');
 router(app);
 
-
 /****
  * process.env.PORT || 8081
  * we now use config obj
