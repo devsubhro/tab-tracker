@@ -6,7 +6,6 @@ const cors = require("cors");
  */
 const morgan = require("morgan");
 
-const {sequelize} = require("./models");
 const config = require('./config/config');
 
 const app = express();
@@ -19,19 +18,13 @@ const req_cors = cors();
 app.use(req_logger);
 app.use(req_parser);
 app.use(req_cors);
-
 /***
- * we need a simple request end-point
+ * get the routes from router.js
+ * we pass the app and the function attach the handler to app
  */
-app.get("/status", (req, resp) => {
-    resp.send({
-        message: "hello and welcome"
-    });
-});
+const router = require('./router');
+router(app);
 
-app.post("/register", (req, resp) => {
-    resp.send(`Hi ${req.body.email}, you are registered with ${req.body.password}! Have fun!`);
-});
 
 /****
  * process.env.PORT || 8081
