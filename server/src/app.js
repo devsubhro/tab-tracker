@@ -6,6 +6,9 @@ const cors = require("cors");
  */
 const morgan = require("morgan");
 
+const {sequelize} = require("./models");
+const config = require('./config/config');
+
 const app = express();
 const req_logger = morgan("combined");
 const req_parser = body_parser.json();
@@ -30,4 +33,9 @@ app.post("/register", (req, resp) => {
     resp.send(`Hi ${req.body.email}, you are registered with ${req.body.password}! Have fun!`);
 });
 
-app.listen(process.env.PORT || 8081);
+/****
+ * process.env.PORT || 8081
+ * we now use config obj
+ */
+app.listen(config.port);
+console.log(`server listening on port ${config.port}`);
