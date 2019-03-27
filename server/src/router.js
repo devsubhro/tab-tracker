@@ -1,5 +1,6 @@
 const DefaultController = require('./controllers/DefaultController');
 const AuthenticationController = require('./controllers/AuthenticationController');
+const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
 
 module.exports = (app) => {
     /****
@@ -13,6 +14,8 @@ module.exports = (app) => {
     /****
      * member register method
      * POST
+     * before handing the control to AuthenticationController.register, we need to
+     * run the validation middleware
      */
-    app.post("/register", AuthenticationController.register);
+    app.post("/register", AuthenticationControllerPolicy.register, AuthenticationController.register);
 };
