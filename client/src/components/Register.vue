@@ -3,14 +3,14 @@
     <v-flex xs6 offset-xs3 style="margin-right:25%">
         <div class="white elevation-2">
             <v-toolbar flat dense class="cyan" dark>
-                <v-toolbar-title>Register</v-toolbar-title>
+                <v-toolbar-title>Sign Up</v-toolbar-title>
             </v-toolbar>
             <div class="pl-4 pr-4">
                 Email: <input name="email" type="email" placeholder="email" v-model="email" />
                 <br />
                 Password: <input name="password" type="password" placeholder="password" v-model="password" />
                 <br />
-                <v-btn @click="register">Register</v-btn>
+                <v-btn @click="login">Sign Up</v-btn>
                 <div class="error" v-html="error"></div>
                 <div class="success" v-html="success"></div>
             </div>

@@ -18,4 +18,5 @@ module.exports = (app) => {
      * run the validation middleware
      */
     app.post("/register", AuthenticationControllerPolicy.register, AuthenticationController.register);
+    app.post("/login", AuthenticationController.login);
 };

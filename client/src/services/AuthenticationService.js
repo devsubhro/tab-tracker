@@ -10,6 +10,9 @@ import {HTTP} from '@/services/Api';
 export default {
     register(credentials) {
         return HTTP.post('/register', credentials);
+    },
+    login(credentials) {
+        return HTTP.post('/login', credentials);
     }
 };
 /**

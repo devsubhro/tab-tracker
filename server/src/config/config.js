@@ -9,5 +9,9 @@ module.exports = {
             host: process.env.DB_HOST || 'localhost',
             dialect: 'mysql'
         }
+    },
+
+    authentication: {
+        jwtSecret: process.env.JWT_SECRET || '12345qwert'
     }
 };
