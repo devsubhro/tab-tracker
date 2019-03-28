@@ -31,7 +31,8 @@ module.exports = {
 
     login: async (req, resp) => {
         try {
-            const {email, password} = req.body;
+            const email = req.body.email;
+            const given_password = req.body.password
             const user = await User.findOne({
                 where: {
                     email: email
@@ -44,14 +45,22 @@ module.exports = {
                 return;
             }
             /****
-             * maybe need to change to string
+             * we now store the password hash and added a method to User model to check the password
              */
-            if(password != user.password) {
+            let m = false;
+            try {
+                m = await user.verifyPassword(given_password);
+            } catch (e) {
+                //do nothing
+            }
+            
+            if(!m) {
                 resp.status(200).send({
                     error: 'Incorrect password'
                 });
                 return;
             }
+            
             const userJSON = user.toJSON();
             resp.send({
                 user: userJSON,

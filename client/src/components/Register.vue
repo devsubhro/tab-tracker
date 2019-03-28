@@ -10,7 +10,7 @@
                 <br />
                 Password: <input name="password" type="password" placeholder="password" v-model="password" />
                 <br />
-                <v-btn @click="login">Sign Up</v-btn>
+                <v-btn @click="register">Sign Up</v-btn>
                 <div class="error" v-html="error"></div>
                 <div class="success" v-html="success"></div>
             </div>
@@ -58,8 +58,12 @@ export default {
 <style scoped>
 .error {
     color: red;
+    background: #febdbd !important;
+    border-color: #febdbd !important;
 }
 .success {
-    color: green
+    color: green;
+    background: #7adb7e;
+    border-color: #7adb7e;
 }
 </style>

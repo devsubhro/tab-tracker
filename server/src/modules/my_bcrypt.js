@@ -1,30 +1,35 @@
 const bcrypt = require('bcrypt-nodejs');
 
-module.exports = {
-    hash: function(data_to_hash) {
+function promisifyVerifyHash(data, hash) {
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(data, hash, (err, res) => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        }); 
+    });
+}
 
-        return promise = new Promise((resolve, reject) => {
-            bcrypt.hash(data_to_hash, null, null, (err, res) => {
-                
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(res);
-                }
-            });
+function promisifyHash(data) {
+    return new Promise((resolve, reject) => {
+        bcrypt.hash(data, null, null, (err, res) => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
         });
+    });
+}
+
+module.exports = {
+    hash: function(data) {
+        return promisifyHash(data);
     },
 
-    compareHash: function(value, match_hash) {
-        return promise = new Promise((resolve, reject) => {
-            bcrypt.compare(value, match_hash, (err, res) => {
-                
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(res);
-                }
-            });
-        });
+    compareHash: function(data, hash) {
+        return promisifyVerifyHash(data,hash);
     }
 };

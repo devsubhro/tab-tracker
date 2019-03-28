@@ -36,12 +36,17 @@ export default {
         async login() {
             try {
                 this.error = '';
-                this.error = '';
+                this.success = '';
                 const response = await AuthenticationService.login({
                     email: this.email,
                     password: this.password
                 });
-                this.success = `You are logged in`;
+                
+                if(response.data.error) {
+                    this.error = response.data.error;
+                } else {
+                    this.success = `You are logged in`;
+                }
             } catch (e) {
                 this.error = e.response.data.error;
             }
@@ -58,8 +63,12 @@ export default {
 <style scoped>
 .error {
     color: red;
+    background: #febdbd !important;
+    border-color: #febdbd !important;
 }
 .success {
-    color: green
+    color: green;
+    background: #7adb7e;
+    border-color: #7adb7e;
 }
 </style>

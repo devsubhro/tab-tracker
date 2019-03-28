@@ -1,5 +1,6 @@
 const sequelize = require('sequelize');
 const config = require('../config/config');
+const myHash = require('../modules/my_bcrypt');
 
 const sql = new sequelize(
     config.db.database,
@@ -7,10 +8,21 @@ const sql = new sequelize(
     config.db.password,
     config.db.options
 );
+
+async function hashPassword(model, options) {
+    try {
+        model.password = await model.generateHash(model.password);
+        return;
+    } catch (e) {
+        throw e;
+    }
+    
+}
+
 /****
  * DataTypes: it is property of the sequelize, and not the object create using new (and stored in sql)
  */
-const m = sql.define('User', {
+const User_schema = sql.define('User', {
     /****
      * we have User_id as primary field instead of id
      */
@@ -37,8 +49,30 @@ const m = sql.define('User', {
     freezeTableName: true,
     // define the table's name
     tableName: 'User',
-});
-module.exports = m;
+}/*, {
+    hooks: {
+        beforeCreate: hashPassword,
+        beforeUpdate: hashPassword,
+        beforeSave: hashPassword
+    }
+}*/);
+
+/***
+ * this cannot be declared in prototype
+ * basically we are attaching a callback hook by calling beforeCreate()
+ */
+User_schema.beforeCreate(hashPassword);
+
+/****
+ * the my hash methods returns promise which we return from our function
+ */
+User_schema.prototype.generateHash = function(password) {
+    return myHash.hash(password);
+}
+User_schema.prototype.verifyPassword = function(password) {
+    return myHash.compareHash(password, this.password);
+};
+module.exports = User_schema;
 
 
 
