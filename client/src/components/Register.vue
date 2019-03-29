@@ -41,6 +41,9 @@ export default {
                     email: this.email,
                     password: this.password
                 });
+                //this will call setToken() method defined in action block inside store/store.js
+                this.$store.dispatch('setToken', response.data.token);
+                this.$store.dispatch('setUser', response.data.user);
                 this.success = `Your user id is ${response.data.user.User_id}, email ${response.data.user.email}`;
             } catch (e) {
                 this.error = e.response.data.error;

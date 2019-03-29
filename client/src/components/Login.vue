@@ -45,6 +45,9 @@ export default {
                 if(response.data.error) {
                     this.error = response.data.error;
                 } else {
+                    //this will call setToken() method defined in action block inside store/store.js
+                    this.$store.dispatch('setToken', response.data.token);
+                    this.$store.dispatch('setUser', response.data.user);
                     this.success = `You are logged in`;
                 }
             } catch (e) {
