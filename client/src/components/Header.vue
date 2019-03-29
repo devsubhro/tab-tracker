@@ -4,7 +4,7 @@
             Tab Tracker
         </v-toolbar-title>
         <v-toolbar-items>
-            <v-btn flat>
+            <v-btn @click="navigate('songs')" flat>
                 browse
             </v-btn>
         </v-toolbar-items>
@@ -32,6 +32,12 @@ export default {
         logout() {
             this.$store.dispatch('setToken', null);
             this.$store.dispatch('setUser', null);
+        },
+        navigate(goto) {
+            const ref = {
+                name: goto
+            }
+            this.$router.push(ref);
         }
     }
 }
