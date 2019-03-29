@@ -41,7 +41,7 @@ export default {
                     email: this.email,
                     password: this.password
                 });
-                this.success = `Your user id is ${response.data.User_id}, email ${response.data.email}`;
+                this.success = `Your user id is ${response.data.user.User_id}, email ${response.data.user.email}`;
             } catch (e) {
                 this.error = e.response.data.error;
             }

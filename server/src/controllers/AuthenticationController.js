@@ -22,7 +22,15 @@ module.exports = {
                 email: req.body.email,
                 password: req.body.password
             });
-            resp.send(user.toJSON());
+            /***
+             * just like login, we create a token
+             */
+            const userJSON = user.toJSON();
+            resp.send({
+                user: userJSON,
+                token: jwtSignUser(userJSON)
+            });
+            
         } catch (err) {
             console.log(err);
             resp.send('Oops');
