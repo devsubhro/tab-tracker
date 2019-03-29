@@ -11,11 +11,11 @@
         <v-spacer></v-spacer>
         <v-toolbar-items>
             <router-link to="register">
-                <v-btn flat>Sign Up</v-btn>
+                <v-btn v-if="!$store.state.is_user_logged_in" flat>Sign Up</v-btn>
             </router-link>
 
             <router-link to="login">
-                <v-btn flat>Sign In</v-btn>
+                <v-btn v-if="!$store.state.is_user_logged_in" flat>Sign In</v-btn>
             </router-link>
             
         </v-toolbar-items>
