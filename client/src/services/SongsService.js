@@ -10,5 +10,9 @@ import {HTTP} from '@/services/Api';
 export default {
     getAllSongs () {
         return HTTP.get('/songs');
+    },
+    create (song) {
+        // POST type request, and we send the song obj literal containing the data
+        return HTTP.post('/post', song);
     }
 };

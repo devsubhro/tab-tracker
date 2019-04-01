@@ -13,5 +13,19 @@ module.exports = {
             });
             return;
         }
-    }
+    },
+    post: async (req, resp) => {
+        try {
+            /****
+             * TODO: validation?
+             */
+            const song = await Song.create(req.body);
+            resp.send(JSON.stringify(song));
+        } catch (e) {
+            resp.status(200).send({
+                error: e
+            });
+            return;
+        }
+    },
 }

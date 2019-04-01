@@ -3,6 +3,7 @@
     <v-flex xs6 offset-xs3 style="margin-right:25%">
         <content-panel title="Songs">
             <slot>
+                <v-btn @click="add_song">Add</v-btn>
                 <div v-for="song in song_list" :key="song.Song_id">
                     {{song.title}}<br />
                     {{song.artist}}<br />
@@ -40,6 +41,13 @@ export default {
     },
     components: {
         ContentPanel
+    },
+    methods: {
+        add_song() {
+            this.$router.push({
+                name: 'create-song'
+            });
+        }
     }
 }
 </script>
