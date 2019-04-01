@@ -25,7 +25,7 @@ webpack-simple - A simple Webpack + vue-loader setup for quick prototyping.
 
 vue init webpack client
 
-run client
+RUN client
 cd client
 npm install
 npm run dev
@@ -90,7 +90,7 @@ the server is listening on port 8081 so
 localhost:8081/status will give
 {"message":"hello and welcome"}
 
-run server: /server/src npm run lint and npm run start
+RUN server: /server/src npm run lint and npm run start
 -----------------------
 /client$ npm install axios
 
@@ -143,3 +143,6 @@ npm install joi
 /client/src -> create folder store -> store.js
 
 create song, name, image
+----------------------------------------
+//https://github.com/kaorun343/vue-youtube-embed
+/client npm install vue-youtube-embed
