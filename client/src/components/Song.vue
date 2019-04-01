@@ -1,34 +1,33 @@
 <template>
 <v-layout column>
     <v-flex xs1 offset-xs1>
-        <content-panel title="Create Song">
+        <content-panel :title="song.title">
             <slot>
-                <div style="position:relative;">
-                <div style="position:absolute; width:50%; left:0;">
-                    Title: {{song.title}}
-                    <br /><br />
-                    Artist: {{song.artist}}
-                    <br /><br />
-                    Album: {{song.album}}
-                    <br /><br />
-                    Genre: {{song.genre}}
-                    <br /><br />
-                    Image URL: <img class="album-image" :src="song.album_image_url" />
-                    <br /><br />
-                    Youtube ID: {{song.youtube_id}}
-                    
-                    <div class="error" v-html="error"></div>
-                    
-                </div>
-                <div style="position:relative; width:50%; top:0px; left:500px;">
-                    Lyrics: <br />
-                    <textarea class="box" name="lyrics" v-model="song.lyrics" />
-                    <br /><br />
-                    Tab: <br />
-                    <textarea class="box" name="tab" v-model="song.tab" />
-                </div>
+            <div class="song-title">{{song.title}}</div>
+            <div class="song-artist">Artist: {{song.artist}}</div>
+            <div class="song-album">Album: {{song.album}}</div>
+            <div class="song-genre">Genre: {{song.genre}}</div>
+            <v-layout>
                 
-                </div>
+                <v-flex xs6>
+                    <img class="album-image" :src="song.album_image_url" />
+                </v-flex>
+                
+                <youtube :video-id="youtube_embed_id"></youtube>
+                <v-flex xs6>
+                </v-flex>
+            </v-layout>
+
+            <v-layout>
+                <v-flex xs6>
+                    <textarea class="box" name="lyrics" v-model="song.lyrics" />
+                </v-flex>
+                <v-flex xs6>
+                    <textarea class="box" name="tab" v-model="song.tab" />
+                </v-flex>
+            </v-layout>
+            
+            <div class="error" v-html="error"></div>   
             </slot>
         </content-panel>
     </v-flex>  
@@ -42,6 +41,7 @@ export default {
     data () {
         return {
             song: null,
+            youtube_embed_id: null,
             error: null,
         }
     },
@@ -56,10 +56,13 @@ export default {
             if(response.data.error){
                 this.error = response.data.error;
             } else {
+                const youtube_url = response.data[0]['youtube_id'];
+                const replace_portion = 'https://www.youtube.com/watch?v=';
+                this.youtube_embed_id = youtube_url.replace(replace_portion,'');
                 this.song = response.data[0];
             }
         } catch (e) {
-            this.song_list = [],
+            this.song = null,
             this.error = 'Oops'
         }
     },
@@ -72,5 +75,30 @@ export default {
 </script>
 
 <style scoped>
-
+.song-title {
+    font-size: 24px;
+    text-align: left;
+}
+.song-artist {
+    font-size: 16px;
+    text-align: left;
+}
+.song-genre, .song-album {
+    font-size: 14px;
+    text-align: left;
+}
+.album-image {
+    width: 100%;
+}
+.box {
+    border: none;
+    width: 400px;
+    height: 300px;
+    overflow: auto;
+}
+.error {
+    color: red;
+    background: #febdbd !important;
+    border-color: #febdbd !important;
+}
 </style>
